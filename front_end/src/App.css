@@ -1,0 +1,17 @@
+#main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+}
+
+#gameboard {
+  width: 500px;
+  height: 500px;
+  background-color: green;
+}
+
+#shop {
+}
