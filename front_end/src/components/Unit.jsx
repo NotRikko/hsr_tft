@@ -1,15 +1,35 @@
 import Style from './ui.module.css'
 import Jade from '../assets/Item_Stellar_Jade.png';
+import Acheron from '../assets/acheron_tft.png'
 
-function Unit() {
+function Unit({unit, rarities}) {
+    const getRarityClass = () => {
+        switch (rarities[unit.rarity].name) {
+            case 'Common': 
+              return Style.common;
+            case 'Uncommon':
+              return Style.uncommon;
+            case 'Rare':
+              return Style.rare;
+            case 'Epic': 
+              return Style.epic;
+            case 'Legendary':
+              return Style.legendary;
+            default:
+              return ''; 
+          }
+    }
+
+    const rarityClass = getRarityClass();
+
     return (
-        <div className={Style.unit}>
-            <img className = {Style.unit_image} src='https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/02/honkai-star-rail-s-acheron-may-have-more-than-one-identities.jpg'/>
+        <div className={`${Style.unit} ${rarityClass}`}>
+            <img className = {Style.unit_image} src={unit.image}/>
             <div className={Style.unit_info}>
-                <p>Acheron</p>
+                <p>{unit.name}</p>
                 <div className={Style.unit_cost}>
                     <img src={Jade} />
-                    <p>4</p>
+                    <p>{rarities[unit.rarity].cost}</p>
                 </div>
             </div>
         </div>

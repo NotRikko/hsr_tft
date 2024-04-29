@@ -4,13 +4,16 @@
   justify-content: space-between;
   align-items: center;
   height: 100vh;
-  background-color: black;
+  background-image: url('https://cdn.sanity.io/images/ccckgjf9/production/21268f5a44dafa67c1d65d93b9503f9a5b34606e-1250x740.png?max-h=1080&max-w=1920&fit=scale&auto=format');
+  background-size: cover;
+  background-position: 50% 80%;
+  
 }
 
 #gameboard {
   width: 500px;
   height: 500px;
-  background-color: green;
+  background-color: rgba(0, 128, 0, 0);
 }
 
 #shop {
