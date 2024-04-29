@@ -33,6 +33,10 @@ function Shop({units, rarities, origins, classes}) {
         setShop(selectedUnits);
     }
 
+    const handleGoldChange = (value) => {
+        setGold(gold-value);
+    }
+
     useEffect(() => {
         initialShop();
     }, [units]);
@@ -67,6 +71,8 @@ function Shop({units, rarities, origins, classes}) {
                             rarities={rarities}
                             origins={origins}
                             classes={classes}
+                            shop={shop}
+                            handleGold={handleGoldChange}
                         />
                     ))}
                 </div>

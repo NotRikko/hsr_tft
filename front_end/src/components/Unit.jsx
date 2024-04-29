@@ -5,48 +5,59 @@ import legendary_border from '../assets/five_cost_border.png'
 import common_border from '../assets/one_cost_border.png'
 import uncommon_border from '../assets/two_cost_border.png'
 import rare_border from '../assets/three_cost_border.png'
+import { useState, useEffect } from 'react'
 
-function Unit({unit, rarities, origins, classes}) {
-    const getRarityClass = () => {
-        switch (rarities[unit.rarity].name) {
-            case 'Common': 
-              return Style.common;
-            case 'Uncommon':
-              return Style.uncommon;
-            case 'Rare':
-              return Style.rare;
-            case 'Epic': 
-              return Style.epic;
-            case 'Legendary':
-              return Style.legendary;
-            default:
-              return ''; 
-          }
-    }
-    const getRarityClassBorder = () => {
+function Unit({unit, rarities, origins, classes, shop, handleGold}) {
+  const [isBought, setIsBought] = useState(false);
+
+  useEffect(() => {
+    setIsBought(false);
+  }, [shop])
+
+  const getRarityClass = () => {
       switch (rarities[unit.rarity].name) {
           case 'Common': 
-            return common_border
+            return Style.common;
           case 'Uncommon':
-            return uncommon_border
+            return Style.uncommon;
           case 'Rare':
-            return rare_border
+            return Style.rare;
           case 'Epic': 
-            return epic_border
+            return Style.epic;
           case 'Legendary':
-            return legendary_border
+            return Style.legendary;
           default:
             return ''; 
         }
   }
-    
+  const getRarityClassBorder = () => {
+    switch (rarities[unit.rarity].name) {
+        case 'Common': 
+          return common_border
+        case 'Uncommon':
+          return uncommon_border
+        case 'Rare':
+          return rare_border
+        case 'Epic': 
+          return epic_border
+        case 'Legendary':
+          return legendary_border
+        default:
+          return ''; 
+      }
+  }
+  
+  const handleUnitClick = () => {
+    setIsBought(true);
+    handleGold(rarities[unit.rarity].cost)
+  };
     
 
     const rarityClass = getRarityClass();
     const rarityBorder = getRarityClassBorder();
 
     return (
-        <div className={`${Style.unit} ${rarityClass}`}>
+        <div className={`${Style.unit} ${rarityClass} ${isBought? Style.purchased : ''}`} onClick={handleUnitClick}>
             <img className={Style.unit_header} src={rarityBorder}></img>
             <div className = {Style.unit_image} style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.65)), url(${unit.image})`, backgroundSize: 'cover' }}>
               <ul>
