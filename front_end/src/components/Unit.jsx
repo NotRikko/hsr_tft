@@ -48,7 +48,7 @@ function Unit({unit, rarities, origins, classes}) {
     return (
         <div className={`${Style.unit} ${rarityClass}`}>
             <img className={Style.unit_header} src={rarityBorder}></img>
-            <div className = {Style.unit_image} style={{ backgroundImage: `url(${unit.image})`, backgroundSize: 'cover' }}>
+            <div className = {Style.unit_image} style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.75)), url(${unit.image})`, backgroundSize: 'cover' }}>
               <ul>
                 <li>{origins[unit.origin].name}</li>
                 <li>{classes[unit.class].name}</li>
