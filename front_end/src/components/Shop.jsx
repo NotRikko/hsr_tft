@@ -6,13 +6,24 @@ import LevelUpIcon from '../assets/lvl_up.png'
 import Jade from '../assets/Item_Stellar_Jade.png';
 
 
-function Shop({units, rarities}) {
+function Shop({units, rarities, origins, classes}) {
     const [shop, setShop] = useState([]);
+    const [gold, setGold] = useState(50);
 
     const handleShopChange = () => {
         const unitsCopy = [...units];
+        for (let i = unitsCopy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [unitsCopy[i], unitsCopy[j]] = [unitsCopy[j], unitsCopy[i]];
+        }
+        const selectedUnits = unitsCopy.slice(0, 5);
 
-
+        setShop(selectedUnits);
+        setGold(gold-2)
+    }
+    
+    const initialShop = () => {
+        const unitsCopy = [...units];
         for (let i = unitsCopy.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [unitsCopy[i], unitsCopy[j]] = [unitsCopy[j], unitsCopy[i]];
@@ -23,15 +34,16 @@ function Shop({units, rarities}) {
     }
 
     useEffect(() => {
-        handleShopChange();
+        initialShop();
     }, [units]);
+    
 
 
     return (
         <div id={Style.bottomOverlay}>
             <div id={Style.shop_header}>
                 <img src={Jade}/>
-                <p>50</p>
+                <p>{gold}</p>
             </div>
             <div id={Style.shop}>
                 <div id={Style.options}>
@@ -49,7 +61,13 @@ function Shop({units, rarities}) {
                 </div>
                 <div id={Style.units}>
                     {shop.map((unit, index) => (
-                        <Unit key={index} unit={unit} rarities={rarities}/>
+                        <Unit 
+                            key={index} 
+                            unit={unit} 
+                            rarities={rarities}
+                            origins={origins}
+                            classes={classes}
+                        />
                     ))}
                 </div>
             </div>

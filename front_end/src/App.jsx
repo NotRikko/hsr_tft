@@ -6,47 +6,63 @@ import './App.css'
 function App() {
   const [units, setUnits] = useState([]);
   const [rarities, setRarities] = useState([]);
+  const [origins, setOrigins] = useState([]);
+  const [classes, setClasses] = useState([]);
+
   const rarityMap= {};
+  const originMap = {};
+  const classMap = {};
+
   rarities.forEach((rarity) => {
     rarityMap[rarity._id] = rarity;
   });
+  origins.forEach((origin) => {
+    originMap[origin._id] = origin;
+  });
+  classes.forEach((cls) => {
+    classMap[cls._id] = cls
+  });
 
-
+  const fetchData = async (url) => {
+    const response = await fetch(url, { mode: 'cors' });
+    if (!response.ok) {
+      throw new Error('Issue with network response');
+    }
+    return response.json();
+  };
 
   useEffect(() => {
-    const fetchUnits = async () => {
+    const fetchAllData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/', { mode: 'cors' });
-        if (!response.ok) {
-          throw new Error('Issue with network response');
-        }
-        const data = await response.json();
-        setUnits(data);
+        const [unitsData, raritiesData, originsData, classesData] = await Promise.all([
+          fetchData('http://localhost:3000/'),
+          fetchData('http://localhost:3000/rarities'),
+          fetchData('http://localhost:3000/origins'),
+          fetchData('http://localhost:3000/classes')
+        ]);
+
+        setUnits(unitsData);
+        setRarities(raritiesData);
+        setOrigins(originsData);
+        setClasses(classesData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-    const fetchRarities = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/rarities', { mode: 'cors' });
-        if (!response.ok) {
-          throw new Error('Issue with network response');
-        }
-        const data = await response.json();
-        setRarities(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchUnits();
-    fetchRarities();
+
+    fetchAllData();
   }, []);
 
   return (
     <div id='main'>
       <div id='gameboard'></div>
       <div>
-        <Shop units ={units} rarities={rarityMap}/>
+        <Shop 
+          units ={units}
+          rarities={rarityMap}
+          origins={originMap}
+          classes={classMap}
+        />
       </div>
     </div>
   )
