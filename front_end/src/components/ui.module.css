@@ -10,6 +10,11 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    transition: filter 0.2s ease;
+}
+
+.unit:hover {
+    filter: brightness(1.5);
 }
 
 .unit_header {
@@ -53,7 +58,7 @@
     filter: brightness(100%);
     padding-left: 5%;
     padding-bottom: 5%;
-    font-weight: 550;
+    font-weight: 500;
 }
 
 .unit_info {
@@ -153,6 +158,11 @@
     align-items: center;
     height: 48%;
     color: white;
+    transition: filter 0.2s ease;
+}
+
+#options button:hover {
+    filter: brightness(1.5);
 }
 
 #options button img {
